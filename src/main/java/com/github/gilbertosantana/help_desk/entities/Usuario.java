@@ -1,6 +1,8 @@
 package com.github.gilbertosantana.help_desk.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import com.github.gilbertosantana.help_desk.entities.enums.Perfil;
@@ -10,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,6 +29,9 @@ public class Usuario implements Serializable {
 	private String senha;
 	private Integer perfil;
 	private Integer statusUsuario;
+	
+	@OneToMany(mappedBy = "usuario")
+	private List<Chamado> chamados = new ArrayList<>();
 
 	public Usuario() {
 	}
@@ -89,6 +95,10 @@ public class Usuario implements Serializable {
 		if (statusUsuario != null) {
 			this.statusUsuario = statusUsuario.getCode();
 		}
+	}
+
+	public List<Chamado> getChamados() {
+		return chamados;
 	}
 
 	@Override
