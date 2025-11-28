@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.github.gilbertosantana.help_desk.entities.enums.Perfil;
 import com.github.gilbertosantana.help_desk.entities.enums.StatusUsuario;
 
@@ -31,6 +32,7 @@ public class Usuario implements Serializable {
 	private Integer statusUsuario;
 	
 	@OneToMany(mappedBy = "usuario")
+	@JsonBackReference
 	private List<Chamado> chamados = new ArrayList<>();
 
 	public Usuario() {

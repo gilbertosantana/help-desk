@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.github.gilbertosantana.help_desk.entities.enums.Prioridade;
 import com.github.gilbertosantana.help_desk.entities.enums.StatusChamado;
 
@@ -13,14 +14,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Chamado")
-public class Chamado implements Serializable{
+public class Chamado implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -28,21 +30,27 @@ public class Chamado implements Serializable{
 	private String descricao;
 	private Integer prioridade;
 	private Integer statusAtual;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
+	@JsonManagedReference
 	private Usuario usuario;
+
+	@OneToOne
+	private Categoria categoria;
 
 	public Chamado() {
 	}
 
-	public Chamado(Long id, Instant dataAbertura, String descricao, Usuario usuario, Prioridade prioridade, StatusChamado status) {
+	public Chamado(Long id, Instant dataAbertura, String descricao, Usuario usuario, Prioridade prioridade,
+			StatusChamado status, Categoria categoria) {
 		this.id = id;
 		this.dataAbertura = dataAbertura;
 		this.descricao = descricao;
 		this.usuario = usuario;
 		setPrioridade(prioridade);
 		setStatusAtual(status);
+		this.categoria = categoria;
 
 	}
 

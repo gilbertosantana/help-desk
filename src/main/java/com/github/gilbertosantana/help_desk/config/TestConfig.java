@@ -8,12 +8,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.github.gilbertosantana.help_desk.entities.Categoria;
 import com.github.gilbertosantana.help_desk.entities.Chamado;
 import com.github.gilbertosantana.help_desk.entities.Usuario;
 import com.github.gilbertosantana.help_desk.entities.enums.Perfil;
 import com.github.gilbertosantana.help_desk.entities.enums.Prioridade;
 import com.github.gilbertosantana.help_desk.entities.enums.StatusChamado;
 import com.github.gilbertosantana.help_desk.entities.enums.StatusUsuario;
+import com.github.gilbertosantana.help_desk.repositories.CategoriaRepository;
 import com.github.gilbertosantana.help_desk.repositories.ChamadoRepository;
 import com.github.gilbertosantana.help_desk.repositories.UsuarioRepository;
 
@@ -27,8 +29,21 @@ public class TestConfig implements CommandLineRunner {
 	@Autowired
 	private ChamadoRepository chamadoRepository;
 	
+	@Autowired
+	private CategoriaRepository categoriaRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
+		
+		Categoria categoria1 = new Categoria(null, "Computador");
+		Categoria categoria2 = new Categoria(null, "Impressora");
+		Categoria categoria3 = new Categoria(null, "E-mail");
+		Categoria categoria4 = new Categoria(null, "Reset de senha");
+		Categoria categoria5 = new Categoria(null, "Sistema CS");
+		Categoria categoria6 = new Categoria(null, "Criação de Script");
+		
+		categoriaRepository.saveAll(Arrays.asList(categoria1, categoria2, categoria3, categoria4, categoria5, categoria6));
+				
 		Usuario usuario1 = new Usuario(null, "Gilberto", "gilberto@gmail.com", "qwert", Perfil.SUPORTE, StatusUsuario.ATIVO);
 		Usuario usuario2 = new Usuario(null, "Moises", "moises@gmail.com", "zxcvb", Perfil.SUPORTE, StatusUsuario.ATIVO);
 		Usuario usuario3 = new Usuario(null, "Junior", "junior@gmail.com", "nm,.;", Perfil.ADMINISTRADOR, StatusUsuario.ATIVO);
@@ -38,8 +53,8 @@ public class TestConfig implements CommandLineRunner {
 		
 		usuarioRepository.saveAll(Arrays.asList(usuario1, usuario2, usuario3, usuario4, usuario5));
 		
-		Chamado chamado1 = new Chamado(null, Instant.now(), "Está dando erro ao fazer o encerramento", usuario4, Prioridade.ALTA, StatusChamado.ABERTO);
-		Chamado chamado2 = new Chamado(null, Instant.now(), "Preciso de um script de abastecimento", usuario5, Prioridade.MEDIA, StatusChamado.EM_ANALISE);
+		Chamado chamado1 = new Chamado(null, Instant.now(), "Está dando erro ao fazer o encerramento", usuario4, Prioridade.ALTA, StatusChamado.ABERTO, categoria5);
+		Chamado chamado2 = new Chamado(null, Instant.now(), "Preciso de um script de abastecimento", usuario5, Prioridade.MEDIA, StatusChamado.EM_ANALISE, categoria6);
 		
 		chamadoRepository.saveAll(Arrays.asList(chamado1, chamado2));
 		
