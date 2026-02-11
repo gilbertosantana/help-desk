@@ -1,62 +1,47 @@
 package com.github.gilbertosantana.help_desk.config;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.github.gilbertosantana.help_desk.entities.Categoria;
-import com.github.gilbertosantana.help_desk.entities.Chamado;
-import com.github.gilbertosantana.help_desk.entities.Usuario;
-import com.github.gilbertosantana.help_desk.entities.enums.Perfil;
-import com.github.gilbertosantana.help_desk.entities.enums.Prioridade;
-import com.github.gilbertosantana.help_desk.entities.enums.StatusChamado;
-import com.github.gilbertosantana.help_desk.entities.enums.StatusUsuario;
-import com.github.gilbertosantana.help_desk.repositories.CategoriaRepository;
-import com.github.gilbertosantana.help_desk.repositories.ChamadoRepository;
-import com.github.gilbertosantana.help_desk.repositories.UsuarioRepository;
+import com.github.gilbertosantana.help_desk.entities.Category;
+import com.github.gilbertosantana.help_desk.entities.Ticket;
+import com.github.gilbertosantana.help_desk.entities.enums.Priority;
+import com.github.gilbertosantana.help_desk.entities.enums.TicketStatus;
+import com.github.gilbertosantana.help_desk.repositories.CategoryRepository;
+import com.github.gilbertosantana.help_desk.repositories.TicketRepository;
 
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
 
-	@Autowired
-	private UsuarioRepository usuarioRepository;
-	
-	@Autowired
-	private ChamadoRepository chamadoRepository;
-	
-	@Autowired
-	private CategoriaRepository categoriaRepository;
+	private final TicketRepository ticketRepository;
+	private final CategoryRepository categoryRepository;
+
+	public TestConfig(TicketRepository ticketRepository, CategoryRepository categoryRepository) {
+		this.ticketRepository = ticketRepository;
+		this.categoryRepository = categoryRepository;
+	}
 	
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Categoria categoria1 = new Categoria(null, "Computador");
-		Categoria categoria2 = new Categoria(null, "Impressora");
-		Categoria categoria3 = new Categoria(null, "E-mail");
-		Categoria categoria4 = new Categoria(null, "Reset de senha");
-		Categoria categoria5 = new Categoria(null, "Sistema CS");
-		Categoria categoria6 = new Categoria(null, "Criação de Script");
+		Category category1 = new Category(null, "Computador");
+		Category category2 = new Category(null, "Impressora");
+		Category category3 = new Category(null, "E-mail");
+		Category category4 = new Category(null, "Reset de senha");
+		Category category5 = new Category(null, "Sistema CS");
+		Category category6 = new Category(null, "Criação de Script");
 		
-		categoriaRepository.saveAll(Arrays.asList(categoria1, categoria2, categoria3, categoria4, categoria5, categoria6));
-				
-		Usuario usuario1 = new Usuario(null, "Gilberto", "gilberto@gmail.com", "qwert", Perfil.SUPORTE, StatusUsuario.ATIVO);
-		Usuario usuario2 = new Usuario(null, "Moises", "moises@gmail.com", "zxcvb", Perfil.SUPORTE, StatusUsuario.ATIVO);
-		Usuario usuario3 = new Usuario(null, "Junior", "junior@gmail.com", "nm,.;", Perfil.ADMINISTRADOR, StatusUsuario.ATIVO);
-		Usuario usuario4 = new Usuario(null, "Fernada Karla", "fernada@gmail.com", "asdfg", Perfil.COMUM, StatusUsuario.ATIVO);
-		Usuario usuario5 = new Usuario(null, "Asteny", "asteny@gmail.com", "jkçl", Perfil.COMUM, StatusUsuario.ATIVO);
+		categoryRepository.saveAll(Arrays.asList(category1, category2, category3, category4, category5, category6));
 		
+		Ticket ticket1 = new Ticket(null, LocalDateTime.now(), "Está dando erro ao fazer o encerramento", Priority.ALTA, TicketStatus.ABERTO, category5);
+		Ticket ticket2 = new Ticket(null, LocalDateTime.now(), "Preciso de um script de abastecimento", Priority.MEDIA, TicketStatus.EM_ANALISE, category6);
 		
-		usuarioRepository.saveAll(Arrays.asList(usuario1, usuario2, usuario3, usuario4, usuario5));
-		
-		Chamado chamado1 = new Chamado(null, Instant.now(), "Está dando erro ao fazer o encerramento", usuario4, Prioridade.ALTA, StatusChamado.ABERTO, categoria5);
-		Chamado chamado2 = new Chamado(null, Instant.now(), "Preciso de um script de abastecimento", usuario5, Prioridade.MEDIA, StatusChamado.EM_ANALISE, categoria6);
-		
-		chamadoRepository.saveAll(Arrays.asList(chamado1, chamado2));
+		ticketRepository.saveAll(Arrays.asList(ticket1, ticket2));
 		
 		
 		

@@ -1,6 +1,6 @@
 package com.github.gilbertosantana.help_desk.entities.enums;
 
-public enum Perfil {
+public enum Profile {
 	
 	COMUM(1),
 	SUPORTE(2),
@@ -8,7 +8,7 @@ public enum Perfil {
 	
 	private int code;
 	
-	private Perfil(int code) {
+	private Profile(int code) {
 		this.code = code;
 	}
 	
@@ -16,8 +16,8 @@ public enum Perfil {
 		return code;
 	}
 	
-	public static Perfil valueOf(int code) {
-		for(Perfil value: Perfil.values()) {
+	public static Profile valueOf(int code) {
+		for(Profile value: Profile.values()) {
 			if(value.getCode() == code) {
 				return value;
 			}

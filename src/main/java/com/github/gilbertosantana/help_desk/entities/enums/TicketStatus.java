@@ -1,6 +1,6 @@
 package com.github.gilbertosantana.help_desk.entities.enums;
 
-public enum StatusChamado {
+public enum TicketStatus {
 	
 	ABERTO(1),
 	EM_ANALISE(2),
@@ -10,7 +10,7 @@ public enum StatusChamado {
 	
 	private int code;
 	
-	private StatusChamado(int code) {
+	private TicketStatus(int code) {
 		this.code = code;
 	}
 	
@@ -18,8 +18,8 @@ public enum StatusChamado {
 		return code;
 	}
 	
-	public static StatusChamado valueOf(int code) {
-		for(StatusChamado value: StatusChamado.values()) {
+	public static TicketStatus valueOf(int code) {
+		for(TicketStatus value: TicketStatus.values()) {
 			if(value.getCode() == code) {
 				return value;
 			}

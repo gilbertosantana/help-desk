@@ -1,6 +1,6 @@
 package com.github.gilbertosantana.help_desk.entities.enums;
 
-public enum Prioridade {
+public enum Priority {
 	
 	ALTA(1),
 	MEDIA(2),
@@ -8,7 +8,7 @@ public enum Prioridade {
 	
 	private int code;
 	
-	private Prioridade(int code) {
+	private Priority(int code) {
 		this.code = code;
 	}
 	
@@ -16,8 +16,8 @@ public enum Prioridade {
 		return code;
 	}
 	
-	public static Prioridade valueOf(int code) {
-		for(Prioridade value: Prioridade.values()) {
+	public static Priority valueOf(int code) {
+		for(Priority value: Priority.values()) {
 			if(value.getCode() == code) {
 				return value;
 			}

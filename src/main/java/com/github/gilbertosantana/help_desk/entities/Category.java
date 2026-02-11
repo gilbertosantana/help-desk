@@ -1,5 +1,6 @@
 package com.github.gilbertosantana.help_desk.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,25 +12,26 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Categoria")
-public class Categoria implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
+@Table(name = "categories")
+public class Category implements Serializable {
+
+	@Serial
+    private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String descricao;
+	private String description;
 	
-	@OneToOne(mappedBy = "categoria")
-	private Chamado chamado;
+	@OneToOne(mappedBy = "category")
+	private Ticket ticket;
 	
-	public Categoria() {
+	public Category() {
 	}
 
-	public Categoria(Long id, String descricao) {
+	public Category(Long id, String description) {
 		this.id = id;
-		this.descricao = descricao;
+		this.description = description;
 	}
 
 	public Long getId() {
@@ -40,12 +42,12 @@ public class Categoria implements Serializable {
 		this.id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override
@@ -61,7 +63,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Category other = (Category) obj;
 		return Objects.equals(id, other.id);
 	}
 	
