@@ -2,19 +2,24 @@ package com.github.gilbertosantana.help_desk.entities;
 
 import com.github.gilbertosantana.help_desk.entities.enums.Profile;
 import com.github.gilbertosantana.help_desk.entities.enums.userStatus;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "users")
 public class User implements UserDetails {
 	
@@ -24,12 +29,65 @@ public class User implements UserDetails {
 	private String name;
 	private String email;
 	private String password;
-	private Profile profile;
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(
+			name = "user_profiles",
+			joinColumns = @JoinColumn(name = "user_id"))
+	@Enumerated(EnumType.STRING)
+	private Set<Profile> profiles = new HashSet<>();
+
 	private userStatus userStatus;
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	public Set<Profile> getProfiles() {
+		return profiles;
+	}
+
+	public userStatus getUserStatus() {
+		return userStatus;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setUserStatus(userStatus userStatus) {
+		this.userStatus = userStatus;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of();
+		return profiles.stream().map(profile -> new SimpleGrantedAuthority("ROLE_" + profile.name()))
+				.toList();
 	}
 
 	@Override

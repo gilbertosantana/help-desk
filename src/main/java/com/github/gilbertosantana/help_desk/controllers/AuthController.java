@@ -6,6 +6,7 @@ import com.github.gilbertosantana.help_desk.dto.request.RegisterUserRequest;
 import com.github.gilbertosantana.help_desk.dto.response.LoginResponse;
 import com.github.gilbertosantana.help_desk.dto.response.RegisterUserResponse;
 import com.github.gilbertosantana.help_desk.entities.User;
+import com.github.gilbertosantana.help_desk.entities.enums.Profile;
 import com.github.gilbertosantana.help_desk.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/auth")
@@ -53,6 +55,12 @@ public class AuthController {
         newUser.setPassword(passwordEncoder.encode(request.password()));
         newUser.setName(request.name());
         newUser.setEmail(request.email());
+
+        if (request.profile() != null) {
+            newUser.getProfiles().add(request.profile());
+        } else {
+            newUser.getProfiles().add(Profile.COMUM);
+        }
 
         userRepository.save(newUser);
 
