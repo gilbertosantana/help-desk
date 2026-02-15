@@ -8,6 +8,7 @@ import com.github.gilbertosantana.help_desk.dto.response.RegisterUserResponse;
 import com.github.gilbertosantana.help_desk.entities.User;
 import com.github.gilbertosantana.help_desk.entities.enums.Profile;
 import com.github.gilbertosantana.help_desk.repositories.UserRepository;
+import com.github.gilbertosantana.help_desk.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,14 +28,12 @@ import java.util.Set;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
+    private UserService userService;
     private final AuthenticationManager authenticationManager;
     private final TokenConfig tokenConfig;
 
-    public AuthController(PasswordEncoder passwordEncoder, UserRepository userRepository, AuthenticationManager authenticationManager, TokenConfig tokenConfig) {
-        this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;
+    public AuthController(UserService userService, AuthenticationManager authenticationManager, TokenConfig tokenConfig) {
+        this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.tokenConfig = tokenConfig;
     }
@@ -51,18 +50,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<RegisterUserResponse> register(@Valid @RequestBody RegisterUserRequest request) {
-        User newUser = new User();
-        newUser.setPassword(passwordEncoder.encode(request.password()));
-        newUser.setName(request.name());
-        newUser.setEmail(request.email());
-
-        if (request.profile() != null) {
-            newUser.getProfiles().add(request.profile());
-        } else {
-            newUser.getProfiles().add(Profile.COMUM);
-        }
-
-        userRepository.save(newUser);
+        User newUser = userService.register(request);
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
