@@ -1,13 +1,13 @@
 package com.github.gilbertosantana.help_desk.entities.enums;
 
-public enum userStatus {
+public enum UserStatus {
 	
 	ATIVO(1),
 	INATIVO(2);
 	
 	private int code;
 	
-	private userStatus(int code) {
+	private UserStatus(int code) {
 		this.code = code;
 	}
 	
@@ -15,8 +15,8 @@ public enum userStatus {
 		return code;
 	}
 	
-	public static userStatus valueOf(int code) {
-		for(userStatus value: userStatus.values()) {
+	public static UserStatus valueOf(int code) {
+		for(UserStatus value: UserStatus.values()) {
 			if(value.getCode() == code) {
 				return value;
 			}

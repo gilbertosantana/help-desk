@@ -29,29 +29,20 @@ import java.util.Set;
 public class AuthController {
 
     private UserService userService;
-    private final AuthenticationManager authenticationManager;
-    private final TokenConfig tokenConfig;
 
-    public AuthController(UserService userService, AuthenticationManager authenticationManager, TokenConfig tokenConfig) {
+    public AuthController(UserService userService) {
         this.userService = userService;
-        this.authenticationManager = authenticationManager;
-        this.tokenConfig = tokenConfig;
     }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
-        UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(request.email(), request.password());
-        Authentication authentication = authenticationManager.authenticate(userAndPass);
-
-        User user = (User)authentication.getPrincipal();
-        String token = tokenConfig.generateToken(user);
-        return ResponseEntity.ok().body(new LoginResponse(token));
+        LoginResponse response = userService.login(request);
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("/register")
     public ResponseEntity<RegisterUserResponse> register(@Valid @RequestBody RegisterUserRequest request) {
         User newUser = userService.register(request);
-
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")

@@ -1,7 +1,7 @@
 package com.github.gilbertosantana.help_desk.entities;
 
 import com.github.gilbertosantana.help_desk.entities.enums.Profile;
-import com.github.gilbertosantana.help_desk.entities.enums.userStatus;
+import com.github.gilbertosantana.help_desk.entities.enums.UserStatus;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -37,7 +37,7 @@ public class User implements UserDetails {
 	@Enumerated(EnumType.STRING)
 	private Set<Profile> profiles = new HashSet<>();
 
-	private userStatus userStatus;
+	private UserStatus userStatus;
 
 	public Long getId() {
 		return id;
@@ -60,7 +60,7 @@ public class User implements UserDetails {
 		return profiles;
 	}
 
-	public userStatus getUserStatus() {
+	public UserStatus getUserStatus() {
 		return userStatus;
 	}
 
@@ -80,7 +80,7 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
-	public void setUserStatus(userStatus userStatus) {
+	public void setUserStatus(UserStatus userStatus) {
 		this.userStatus = userStatus;
 	}
 
