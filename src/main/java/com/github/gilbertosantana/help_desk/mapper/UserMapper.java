@@ -24,9 +24,7 @@ public class UserMapper {
         user.setEmail(dto.email());
         user.setPassword(passwordEncoder.encode(dto.password()));
         user.setUserStatus(UserStatus.ATIVO);
-
-        user.getProfiles().add(Optional.ofNullable(dto.profile()).orElse(Profile.COMUM));
-
+        user.getProfiles().add(Optional.ofNullable(dto.profile()).orElse(Profile.COMMON));
         return user;
     }
 }

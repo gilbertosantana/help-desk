@@ -20,8 +20,13 @@ public class Ticket implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private LocalDateTime openingDate;
+	private String title;
 	private String description;
+
+	@Enumerated(EnumType.STRING)
 	private Priority priority;
+
+	@Enumerated(EnumType.STRING)
 	private TicketStatus ticketStatus;
 
 	@OneToOne
@@ -30,10 +35,11 @@ public class Ticket implements Serializable {
 	public Ticket() {
 	}
 
-	public Ticket(Long id, LocalDateTime openingDate, String description, Priority priority,
+	public Ticket(Long id, LocalDateTime openingDate, String title, String description, Priority priority,
 				  TicketStatus ticketStatus, Category category) {
 		this.id = id;
 		this.openingDate = openingDate;
+		this.title = title;
 		this.description = description;
 		this.priority = priority;
 		this.ticketStatus = ticketStatus;
@@ -55,6 +61,14 @@ public class Ticket implements Serializable {
 
 	public void setOpeningDate(LocalDateTime openingDate) {
 		this.openingDate = openingDate;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getDescription() {
@@ -79,6 +93,14 @@ public class Ticket implements Serializable {
 
 	public void setTicketStatus(TicketStatus ticketStatus) {
 		this.ticketStatus = ticketStatus;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	@Override
