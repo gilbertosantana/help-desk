@@ -1,4 +1,4 @@
-package com.github.gilbertosantana.help_desk.config;
+package com.github.gilbertosantana.help_desk.security;
 
 import com.github.gilbertosantana.help_desk.entities.enums.Profile;
 import jakarta.servlet.DispatcherType;
@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -38,10 +37,16 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
-                        .requestMatchers("/h2-console/**").permitAll()
+                        /*.requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").hasRole(Profile.ADMINISTRADOR.name())
-                        .anyRequest().authenticated())
+                        .requestMatchers(HttpMethod.POST, "/auth/register").hasRole(Profile.ADMIN.name())
+                        .requestMatchers(HttpMethod.POST, "/api/tickets").hasRole(Profile.COMMON.name())*/
+                        .anyRequest().permitAll())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

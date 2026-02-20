@@ -1,20 +1,13 @@
 package com.github.gilbertosantana.help_desk.controllers;
 
-import com.github.gilbertosantana.help_desk.config.TokenConfig;
 import com.github.gilbertosantana.help_desk.dto.request.LoginRequest;
 import com.github.gilbertosantana.help_desk.dto.request.RegisterUserRequest;
 import com.github.gilbertosantana.help_desk.dto.response.LoginResponse;
 import com.github.gilbertosantana.help_desk.dto.response.RegisterUserResponse;
 import com.github.gilbertosantana.help_desk.entities.User;
-import com.github.gilbertosantana.help_desk.entities.enums.Profile;
-import com.github.gilbertosantana.help_desk.repositories.UserRepository;
 import com.github.gilbertosantana.help_desk.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/auth")

@@ -1,4 +1,4 @@
-package com.github.gilbertosantana.help_desk.config;
+package com.github.gilbertosantana.help_desk.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

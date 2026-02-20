@@ -38,9 +38,15 @@ public class TestConfig implements CommandLineRunner {
 		userAdmin.setName("Gilberto");
 		userAdmin.setEmail("gilbertosantoss307@gmail.com");
 		userAdmin.setPassword(passwordEncoder.encode("1234567"));
-		userAdmin.getProfiles().add(com.github.gilbertosantana.help_desk.entities.enums.Profile.ADMINISTRADOR);
+		userAdmin.getProfiles().add(com.github.gilbertosantana.help_desk.entities.enums.Profile.ADMIN);
 
-		userRepository.save(userAdmin);
+		User userCommon = new User();
+		userCommon.setName("João Vitor");
+		userCommon.setEmail("joao@gmail.com");
+		userCommon.setPassword(passwordEncoder.encode("1234567"));
+		userCommon.getProfiles().add(com.github.gilbertosantana.help_desk.entities.enums.Profile.COMMON);
+
+		userRepository.saveAll(Arrays.asList(userAdmin, userCommon));
 
 		Category category1 = new Category(null, "Computador");
 		Category category2 = new Category(null, "Impressora");
@@ -51,8 +57,8 @@ public class TestConfig implements CommandLineRunner {
 		
 		categoryRepository.saveAll(Arrays.asList(category1, category2, category3, category4, category5, category6));
 		
-		Ticket ticket1 = new Ticket(null, LocalDateTime.now(), "Está dando erro ao fazer o encerramento", Priority.ALTA, TicketStatus.ABERTO, category5);
-		Ticket ticket2 = new Ticket(null, LocalDateTime.now(), "Preciso de um script de abastecimento", Priority.MEDIA, TicketStatus.EM_ANALISE, category6);
+		Ticket ticket1 = new Ticket(null, LocalDateTime.now(), "", "Está dando erro ao fazer o encerramento", Priority.HIGH, TicketStatus.ABERTO, category5);
+		Ticket ticket2 = new Ticket(null, LocalDateTime.now(), "", "Preciso de um script de abastecimento", Priority.MEDIUM, TicketStatus.EM_ANALISE, category6);
 		
 		ticketRepository.saveAll(Arrays.asList(ticket1, ticket2));
 		

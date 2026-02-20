@@ -1,4 +1,4 @@
-package com.github.gilbertosantana.help_desk.config;
+package com.github.gilbertosantana.help_desk.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
