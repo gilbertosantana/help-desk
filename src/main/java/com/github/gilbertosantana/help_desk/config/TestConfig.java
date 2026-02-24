@@ -40,7 +40,13 @@ public class TestConfig implements CommandLineRunner {
 		userAdmin.setPassword(passwordEncoder.encode("1234567"));
 		userAdmin.getProfiles().add(com.github.gilbertosantana.help_desk.entities.enums.Profile.ADMIN);
 
-		userRepository.save(userAdmin);
+		User userCommon = new User();
+		userCommon.setName("João Vitor");
+		userCommon.setEmail("joao@gmail.com");
+		userCommon.setPassword(passwordEncoder.encode("1234567"));
+		userCommon.getProfiles().add(com.github.gilbertosantana.help_desk.entities.enums.Profile.COMMON);
+
+		userRepository.saveAll(Arrays.asList(userAdmin, userCommon));
 
 		Category category1 = new Category(null, "Computador");
 		Category category2 = new Category(null, "Impressora");
