@@ -1,4 +1,4 @@
-package com.github.gilbertosantana.help_desk.dto.request;
+package com.github.gilbertosantana.help_desk.dto.response;
 
 import com.github.gilbertosantana.help_desk.entities.Category;
 import com.github.gilbertosantana.help_desk.entities.enums.Priority;
