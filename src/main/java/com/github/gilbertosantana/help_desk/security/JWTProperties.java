@@ -1,4 +1,4 @@
-package com.github.gilbertosantana.help_desk.config;
+package com.github.gilbertosantana.help_desk.security;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

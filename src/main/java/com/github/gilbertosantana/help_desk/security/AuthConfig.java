@@ -1,4 +1,4 @@
-package com.github.gilbertosantana.help_desk.config;
+package com.github.gilbertosantana.help_desk.security;
 
 import com.github.gilbertosantana.help_desk.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;

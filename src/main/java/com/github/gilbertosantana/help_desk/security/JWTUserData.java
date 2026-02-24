@@ -1,6 +1,5 @@
-package com.github.gilbertosantana.help_desk.config;
+package com.github.gilbertosantana.help_desk.security;
 
-import com.github.gilbertosantana.help_desk.entities.enums.Profile;
 import lombok.Builder;
 
 import java.util.List;
