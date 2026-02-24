@@ -2,9 +2,9 @@ package com.github.gilbertosantana.help_desk.entities.enums;
 
 public enum Priority {
 	
-	ALTA(1),
-	MEDIA(2),
-	BAIXA(3);
+	HIGH(1),
+	MEDIUM(2),
+	LOW(3);
 	
 	private int code;
 	

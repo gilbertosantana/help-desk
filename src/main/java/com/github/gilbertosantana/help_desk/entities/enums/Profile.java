@@ -2,9 +2,9 @@ package com.github.gilbertosantana.help_desk.entities.enums;
 
 public enum Profile {
 	
-	COMUM(1),
-	SUPORTE(2),
-	ADMINISTRADOR(3);
+	COMMON(1),
+	SUPPORT(2),
+	ADMIN(3);
 	
 	private int code;
 	
