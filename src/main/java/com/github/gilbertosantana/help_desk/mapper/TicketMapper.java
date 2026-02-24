@@ -1,7 +1,7 @@
 package com.github.gilbertosantana.help_desk.mapper;
 
 import com.github.gilbertosantana.help_desk.dto.request.OpenTicketRequest;
-import com.github.gilbertosantana.help_desk.dto.request.TicketResponse;
+import com.github.gilbertosantana.help_desk.dto.response.TicketResponse;
 import com.github.gilbertosantana.help_desk.entities.Category;
 import com.github.gilbertosantana.help_desk.entities.Ticket;
 import com.github.gilbertosantana.help_desk.entities.enums.TicketStatus;

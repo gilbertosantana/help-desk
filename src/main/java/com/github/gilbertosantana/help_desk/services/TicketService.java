@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.github.gilbertosantana.help_desk.dto.request.OpenTicketRequest;
-import com.github.gilbertosantana.help_desk.dto.request.TicketResponse;
+import com.github.gilbertosantana.help_desk.dto.response.TicketResponse;
 import com.github.gilbertosantana.help_desk.entities.Category;
 import com.github.gilbertosantana.help_desk.mapper.TicketMapper;
 import com.github.gilbertosantana.help_desk.repositories.CategoryRepository;

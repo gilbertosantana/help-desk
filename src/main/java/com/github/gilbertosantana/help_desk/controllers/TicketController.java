@@ -1,18 +1,16 @@
 package com.github.gilbertosantana.help_desk.controllers;
 
 import com.github.gilbertosantana.help_desk.dto.request.OpenTicketRequest;
-import com.github.gilbertosantana.help_desk.dto.request.TicketResponse;
+import com.github.gilbertosantana.help_desk.dto.response.TicketResponse;
 import com.github.gilbertosantana.help_desk.entities.Ticket;
 import com.github.gilbertosantana.help_desk.services.TicketService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/tickets")
