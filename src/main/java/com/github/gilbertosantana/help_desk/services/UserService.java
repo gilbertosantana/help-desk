@@ -1,12 +1,13 @@
 package com.github.gilbertosantana.help_desk.services;
 
-import com.github.gilbertosantana.help_desk.security.TokenConfig;
 import com.github.gilbertosantana.help_desk.dto.request.LoginRequest;
 import com.github.gilbertosantana.help_desk.dto.request.RegisterUserRequest;
 import com.github.gilbertosantana.help_desk.dto.response.LoginResponse;
 import com.github.gilbertosantana.help_desk.entities.User;
 import com.github.gilbertosantana.help_desk.mapper.UserMapper;
 import com.github.gilbertosantana.help_desk.repositories.UserRepository;
+import com.github.gilbertosantana.help_desk.security.TokenConfig;
+import com.github.gilbertosantana.help_desk.security.userdetails.UserPrincipal;
 import jakarta.validation.Valid;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,8 +32,8 @@ public class UserService {
     public LoginResponse login(@Valid LoginRequest request) {
         UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(request.email(), request.password());
         Authentication authentication = authenticationManager.authenticate(userAndPass);
-        User user = (User)authentication.getPrincipal();
-        String token = tokenConfig.generateToken(user);
+        UserPrincipal user = (UserPrincipal) authentication.getPrincipal();
+        String token = tokenConfig.generateToken(user.getUser());
         return new LoginResponse(token);
     }
 
