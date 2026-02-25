@@ -1,6 +1,7 @@
 package com.github.gilbertosantana.help_desk.security;
 
 import com.github.gilbertosantana.help_desk.repositories.UserRepository;
+import com.github.gilbertosantana.help_desk.security.userdetails.UserPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +19,8 @@ public class AuthConfig implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findUserByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
+        return userRepository.findUserByEmail(username)
+                .map(UserPrincipal::new)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 }
