@@ -23,7 +23,7 @@ public class UserMapper {
         user.setName(dto.name());
         user.setEmail(dto.email());
         user.setPassword(passwordEncoder.encode(dto.password()));
-        user.setUserStatus(UserStatus.ATIVO);
+        user.setAtivo(true);
         user.getProfiles().add(Optional.ofNullable(dto.profile()).orElse(Profile.COMMON));
         return user;
     }

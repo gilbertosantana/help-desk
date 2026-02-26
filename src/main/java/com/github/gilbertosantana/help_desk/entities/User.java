@@ -4,9 +4,7 @@ import com.github.gilbertosantana.help_desk.entities.enums.Profile;
 import com.github.gilbertosantana.help_desk.entities.enums.UserStatus;
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -26,7 +24,10 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Set<Profile> profiles = new HashSet<>();
 
-	private UserStatus userStatus;
+	@OneToMany(mappedBy = "user")
+	private List<Ticket> tickets = new ArrayList<>();
+
+	private boolean ativo = true;
 
 	public Long getId() {
 		return id;
@@ -48,8 +49,8 @@ public class User {
 		return profiles;
 	}
 
-	public UserStatus getUserStatus() {
-		return userStatus;
+	public boolean getAtivo() {
+		return ativo;
 	}
 
 	public void setId(Long id) {
@@ -68,8 +69,8 @@ public class User {
 		this.password = password;
 	}
 
-	public void setUserStatus(UserStatus userStatus) {
-		this.userStatus = userStatus;
+	public void setAtivo(boolean status) {
+		this.ativo = status;
 	}
 
 	@Override

@@ -1,13 +1,18 @@
 package com.github.gilbertosantana.help_desk.services;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 
 import com.github.gilbertosantana.help_desk.dto.request.OpenTicketRequest;
 import com.github.gilbertosantana.help_desk.dto.response.TicketResponse;
 import com.github.gilbertosantana.help_desk.entities.Category;
+import com.github.gilbertosantana.help_desk.entities.User;
 import com.github.gilbertosantana.help_desk.mapper.TicketMapper;
+import com.github.gilbertosantana.help_desk.mapper.UserMapper;
 import com.github.gilbertosantana.help_desk.repositories.CategoryRepository;
+import com.github.gilbertosantana.help_desk.repositories.UserRepository;
+import com.github.gilbertosantana.help_desk.security.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import com.github.gilbertosantana.help_desk.entities.Ticket;
@@ -19,30 +24,35 @@ public class TicketService {
 	private final TicketRepository ticketRepository;
 	private final CategoryRepository categoryRepository;
 	private final TicketMapper ticketMapper;
+	private final UserRepository userRepository;
+	private final UserMapper userMapper;
 
-	public TicketService(TicketRepository ticketRepository, CategoryRepository categoryRepository, TicketMapper ticketMapper) {
+	public TicketService(TicketRepository ticketRepository, CategoryRepository categoryRepository, TicketMapper ticketMapper, UserRepository userRepository, UserMapper userMapper) {
 		this.ticketRepository = ticketRepository;
         this.categoryRepository = categoryRepository;
         this.ticketMapper = ticketMapper;
-    }
+		this.userRepository = userRepository;
+		this.userMapper = userMapper;
+	}
 
 	public TicketResponse openTicket(OpenTicketRequest ticket) {
+        String userEmailCurrent;
+		try {
+			userEmailCurrent = SecurityUtils.getCurrentUser().email();
+        } catch (AccessDeniedException e) {
+            throw new RuntimeException(e);
+        }
+        Optional<User> user = userRepository.findUserByEmail(userEmailCurrent);
 		Optional<Category> category = categoryRepository.findById(ticket.categoryId());
-		Ticket response = ticketMapper.toEntity(ticket, category);
+		Ticket response = ticketMapper.toEntity(ticket, user.get(), category);
 		response = ticketRepository.save(response);
-		return ticketMapper.toOpenTicketResponse(response);
+		return ticketMapper.toResponse(response);
 	}
 
 	public List<TicketResponse> findAll() {
 		List<Ticket> list = ticketRepository.findAll();
 		return list.stream()
-				.map(ticket -> new TicketResponse(ticket.getId(),
-						ticket.getOpeningDate(),
-						ticket.getTitle(),
-						ticket.getDescription(),
-						ticket.getPriority(),
-						ticket.getTicketStatus(),
-						ticket.getCategory()))
+				.map(ticketMapper::toResponse)
 				.toList();
 
 	}

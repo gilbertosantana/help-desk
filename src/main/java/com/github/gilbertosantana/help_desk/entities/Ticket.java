@@ -29,6 +29,10 @@ public class Ticket implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private TicketStatus ticketStatus;
 
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
 	@OneToOne
 	private Category category;
 
@@ -93,6 +97,14 @@ public class Ticket implements Serializable {
 
 	public void setTicketStatus(TicketStatus ticketStatus) {
 		this.ticketStatus = ticketStatus;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Category getCategory() {

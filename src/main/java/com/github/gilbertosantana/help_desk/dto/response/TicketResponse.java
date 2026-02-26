@@ -12,5 +12,6 @@ public record TicketResponse(Long id,
                              String description,
                              Priority priority,
                              TicketStatus ticketStatus,
+                             UserSummaryResponse user,
                              Category category) {
 }
