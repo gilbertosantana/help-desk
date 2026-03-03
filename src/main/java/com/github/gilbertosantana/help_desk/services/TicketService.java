@@ -49,12 +49,18 @@ public class TicketService {
 		return ticketMapper.toResponse(response);
 	}
 
-	public List<TicketResponse> findAll() {
-		List<Ticket> list = ticketRepository.findAll();
+	public List<TicketResponse> findAllByUser() {
+        String userEmailCurrent;
+        try {
+            userEmailCurrent = SecurityUtils.getCurrentUser().email();
+        } catch (AccessDeniedException e) {
+            throw new RuntimeException(e);
+        }
+        Optional<User> user = userRepository.findUserByEmail(userEmailCurrent);
+		List<Ticket> list = ticketRepository.findTicketByUser(user.get());
 		return list.stream()
 				.map(ticketMapper::toResponse)
 				.toList();
-
 	}
 
 	public Ticket findById(Long id) {

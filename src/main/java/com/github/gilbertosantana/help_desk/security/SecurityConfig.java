@@ -40,7 +40,8 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").hasRole(Profile.ADMIN.name())
-                        .requestMatchers(HttpMethod.POST, "/api/tickets").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/tickets").hasRole(Profile.COMMON.name())
+                        .requestMatchers(HttpMethod.GET, "/api/tickets/my").hasRole(Profile.COMMON.name())
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

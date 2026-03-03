@@ -58,8 +58,9 @@ public class TestConfig implements CommandLineRunner {
 		categoryRepository.saveAll(Arrays.asList(category1, category2, category3, category4, category5, category6));
 		
 		Ticket ticket1 = new Ticket(null, LocalDateTime.now(), "", "Está dando erro ao fazer o encerramento", Priority.HIGH, TicketStatus.ABERTO, category5);
+		ticket1.setUser(userCommon);
 		Ticket ticket2 = new Ticket(null, LocalDateTime.now(), "", "Preciso de um script de abastecimento", Priority.MEDIUM, TicketStatus.EM_ANALISE, category6);
-		
+		ticket2.setUser(userCommon);
 		ticketRepository.saveAll(Arrays.asList(ticket1, ticket2));
 		
 		

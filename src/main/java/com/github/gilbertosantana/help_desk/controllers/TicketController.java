@@ -33,10 +33,9 @@ public class TicketController {
 		return ResponseEntity.created(uri).body(ticketResponse);
 	}
 
-	@GetMapping
-	public ResponseEntity<List<TicketResponse>> findAll() {
-		List<TicketResponse> list = service.findAll();
-
+	@GetMapping(value = "/my")
+	public ResponseEntity<List<TicketResponse>> findAllByUser() {
+		List<TicketResponse> list = service.findAllByUser();
 		return ResponseEntity.ok().body(list);
 	}
 	
